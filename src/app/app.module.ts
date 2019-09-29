@@ -21,6 +21,13 @@ import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { NewTaskModalPage } from './new-task-modal/new-task-modal.page';
 
+import { IonicStorageModule } from '@ionic/storage';
+
+import { Firebase } from '@ionic-native/firebase/ngx';
+import 'firebase/messaging';
+import { FirebaseMessagingService } from './firebase-messaging.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,13 +42,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebase), // imports firebase/app
     AngularFirestoreModule, // imports firebase/firestore
     AngularFireAuthModule, // imports firebase/auth
-    AngularFireStorageModule, // imports firebase/storage
+    AngularFireStorageModule, ServiceWorkerModule
+    .register('ngsw-worker.js', { enabled: environment.production }), // imports firebase/storage
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     StatusBar,
     SplashScreen,
     ImagePicker,
     WebView,
+    Firebase,
+    FirebaseMessagingService,
     { provide: FirestoreSettingsToken, useValue: {} },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

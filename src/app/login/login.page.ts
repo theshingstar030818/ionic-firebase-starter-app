@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
 
   validations_form: FormGroup;
-  errorMessage: string = '';
+  errorMessage = '';
 
   validation_messages = {
    'email': [
@@ -43,17 +43,17 @@ export class LoginPage implements OnInit {
     });
   }
 
-  tryLogin(value){
+  tryLogin(value) {
     this.authService.doLogin(value)
     .then(res => {
-      this.router.navigate(["/home"]);
+      this.router.navigate(['/home']);
     }, err => {
       this.errorMessage = err.message;
-      console.log(err)
-    })
+      console.log(err);
+    });
   }
 
-  goRegisterPage(){
-    this.router.navigate(["/register"]);
+  goRegisterPage() {
+    this.router.navigate(['/register']);
   }
 }

@@ -11,27 +11,27 @@ export class AuthService {
   constructor(
     private firebaseService: FirebaseService,
     public afAuth: AngularFireAuth
-  ){}
+  ) {}
 
-  doRegister(value){
+  doRegister(value) {
    return new Promise<any>((resolve, reject) => {
      firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
      .then(
        res => resolve(res),
-       err => reject(err))
-   })
+       err => reject(err));
+   });
   }
 
-  doLogin(value){
+  doLogin(value) {
    return new Promise<any>((resolve, reject) => {
      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
      .then(
        res => resolve(res),
-       err => reject(err))
-   })
+       err => reject(err));
+   });
   }
 
-  doLogout(){
+  doLogout() {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.signOut()
       .then(() => {
@@ -41,6 +41,6 @@ export class AuthService {
         console.log(error);
         reject();
       });
-    })
+    });
   }
 }

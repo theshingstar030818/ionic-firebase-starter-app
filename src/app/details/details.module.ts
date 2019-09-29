@@ -27,6 +27,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [DetailsPage],
-  providers:[DetailsResolver]
+  providers: [DetailsResolver]
 })
 export class DetailsPageModule {}

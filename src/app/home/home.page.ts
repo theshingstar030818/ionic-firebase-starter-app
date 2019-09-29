@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  async getData(){
+  async getData() {
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...'
     });
@@ -35,21 +35,21 @@ export class HomePage implements OnInit {
       routeData['data'].subscribe(data => {
         loading.dismiss();
         this.items = data;
-      })
-    })
+      });
+    });
   }
 
   async presentLoading(loading) {
     return await loading.present();
   }
 
-  logout(){
+  logout() {
     this.authService.doLogout()
     .then(res => {
-      this.router.navigate(["/login"]);
+      this.router.navigate(['/login']);
     }, err => {
       console.log(err);
-    })
+    });
   }
 
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "562087490693",
+    "firebase_url": "https://weighty-clone-253820.firebaseio.com",
+    "project_id": "weighty-clone-253820",
+    "storage_bucket": "weighty-clone-253820.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562087490693:android:b597f6148cfecf3f2065ec",
+        "android_client_info": {
+          "package_name": "io.ionic.starter.delivery.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562087490693-0fm12j2t9fd4rur3ejldb03apgkc31t0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJIqEViyU5DFh5IlAQxgM0-hNiAAfO_rY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562087490693-0fm12j2t9fd4rur3ejldb03apgkc31t0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

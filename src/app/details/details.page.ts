@@ -16,7 +16,7 @@ export class DetailsPage implements OnInit {
   validations_form: FormGroup;
   image: any;
   item: any;
-  load: boolean = false;
+  load = false;
 
   constructor(
     private imagePicker: ImagePicker,
@@ -34,32 +34,32 @@ export class DetailsPage implements OnInit {
     this.getData();
   }
 
-  getData(){
+  getData() {
     this.route.data.subscribe(routeData => {
-     let data = routeData['data'];
+     const data = routeData['data'];
      if (data) {
        this.item = data;
        this.image = this.item.image;
      }
-    })
+    });
     this.validations_form = this.formBuilder.group({
       title: new FormControl(this.item.title, Validators.required),
       description: new FormControl(this.item.description, Validators.required)
     });
   }
 
-  onSubmit(value){
-    let data = {
+  onSubmit(value) {
+    const data = {
       title: value.title,
       description: value.description,
       image: this.image
-    }
-    this.firebaseService.updateTask(this.item.id,data)
+    };
+    this.firebaseService.updateTask(this.item.id, data)
     .then(
       res => {
-        this.router.navigate(["/home"]);
+        this.router.navigate(['/home']);
       }
-    )
+    );
   }
 
   async delete() {
@@ -79,10 +79,10 @@ export class DetailsPage implements OnInit {
             this.firebaseService.deleteTask(this.item.id)
             .then(
               res => {
-                this.router.navigate(["/home"]);
+                this.router.navigate(['/home']);
               },
               err => console.log(err)
-            )
+            );
           }
         }
       ]
@@ -90,19 +90,18 @@ export class DetailsPage implements OnInit {
     await alert.present();
   }
 
-  openImagePicker(){
+  openImagePicker() {
     this.imagePicker.hasReadPermission()
     .then((result) => {
-      if(result == false){
+      if (result === false) {
         // no callbacks required as this opens a popup which returns async
         this.imagePicker.requestReadPermission();
-      }
-      else if(result == true){
+      } else if (result === true) {
         this.imagePicker.getPictures({
           maximumImagesCount: 1
         }).then(
           (results) => {
-            for (var i = 0; i < results.length; i++) {
+            for (let i = 0; i < results.length; i++) {
               this.uploadImageToFirebase(results[i]);
             }
           }, (err) => console.log(err)
@@ -113,7 +112,7 @@ export class DetailsPage implements OnInit {
     });
   }
 
-  async uploadImageToFirebase(image){
+  async uploadImageToFirebase(image) {
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...'
     });
@@ -123,18 +122,18 @@ export class DetailsPage implements OnInit {
     });
     this.presentLoading(loading);
     // let image_to_convert = 'http://localhost:8080/_file_' + image;
-    let image_src = this.webview.convertFileSrc(image);
-    let randomId = Math.random().toString(36).substr(2, 5);
+    const image_src = this.webview.convertFileSrc(image);
+    const randomId = Math.random().toString(36).substr(2, 5);
 
-    //uploads img to firebase storage
+    // uploads img to firebase storage
     this.firebaseService.uploadImage(image_src, randomId)
     .then(photoURL => {
       this.image = photoURL;
       loading.dismiss();
       toast.present();
-    }, err =>{
+    }, err => {
       console.log(err);
-    })
+    });
   }
 
   async presentLoading(loading) {
