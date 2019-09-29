@@ -24,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { Firebase } from '@ionic-native/firebase/ngx';
+import { Device } from '@ionic-native/device/ngx';
+
 import 'firebase/messaging';
 import { FirebaseMessagingService } from './firebase-messaging.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -52,6 +54,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ImagePicker,
     WebView,
     Firebase,
+    Device,
     FirebaseMessagingService,
     { provide: FirestoreSettingsToken, useValue: {} },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

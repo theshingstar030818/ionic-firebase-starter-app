@@ -23,6 +23,7 @@
         "@angular/router": "^7.2.2",
         "@angular/service-worker": "^7.2.2",
         "@ionic-native/core": "^5.0.0",
+        "@ionic-native/device": "^5.14.0",
         "@ionic-native/firebase": "^5.14.0",
         "@ionic-native/image-picker": "^5.0.0",
         "@ionic-native/ionic-webview": "^5.0.0",
@@ -33,6 +34,7 @@
         "@ionic/storage": "^2.2.0",
         "cordova": "^9.0.0",
         "cordova-android": "^8.1.0",
+        "cordova-browser": "6.0.0",
         "cordova-ios": "4.5.5",
         "cordova-plugin-androidx": "^1.0.2",
         "cordova-plugin-androidx-adapter": "^1.1.0",
@@ -87,7 +89,8 @@
         },
         "platforms": [
             "ios",
-            "android"
+            "android",
+            "browser"
         ]
     }
 }

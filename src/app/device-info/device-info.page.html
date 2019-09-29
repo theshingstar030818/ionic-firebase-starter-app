@@ -5,5 +5,29 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Device Info</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <pre>{{deviceInfo | json}}</pre>
+    </ion-card-content>
+  </ion-card>
 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Cordova FCM Token</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Token: <ion-input value="{{firebaseMessagingService.currentToken}}"></ion-input>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer (click)="logout()">
+  <ion-toolbar color="medium">
+    <ion-title>Log out</ion-title>
+  </ion-toolbar>
+</ion-footer>
