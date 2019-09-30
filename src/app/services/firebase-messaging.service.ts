@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import * as app from 'firebase/app';
-import { Firebase } from '@ionic-native/firebase/ngx';
-import { Device } from '@ionic-native/device/ngx';
 
+import { Device } from '@ionic-native/device/ngx';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +15,8 @@ export class FirebaseMessagingService {
 
   constructor(
     private storage: Storage,
-    private firebaseCordova: Firebase,
     private device: Device,
+    private firebase: FirebaseX
   ) {
     if (this.device.platform === 'Android' || this.device.platform === 'ios') {
       this.firebaseMessagingCordovaInit();
@@ -36,19 +36,19 @@ export class FirebaseMessagingService {
   }
 
   public firebaseMessagingCordovaInit() {
-    this.firebaseCordova.getToken()
+    this.firebase.getToken()
       .then(token => {
         this.currentToken = token;
         console.log(`The token is ${token}`);
       }) // save the token server-side and use it to push notifications to this device
       .catch(error => console.error('Error getting token', error));
 
-    this.firebaseCordova.onNotificationOpen()
+    this.firebase.onMessageReceived()
       .subscribe((data) => {
         console.log(`User opened a notification ${data}`);
       });
 
-    this.firebaseCordova.onTokenRefresh().subscribe((token: string) => {
+    this.firebase.onTokenRefresh().subscribe((token: string) => {
       this.currentToken = token;
       console.log(`Got a new token ${token}`);
     });
