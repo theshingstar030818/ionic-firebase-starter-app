@@ -5,12 +5,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
@@ -27,7 +26,7 @@ import { Firebase } from '@ionic-native/firebase/ngx';
 import { Device } from '@ionic-native/device/ngx';
 
 import 'firebase/messaging';
-import { FirebaseMessagingService } from './firebase-messaging.service';
+import { FirebaseMessagingService } from './services/firebase-messaging.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 

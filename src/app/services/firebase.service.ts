@@ -16,6 +16,15 @@ export class FirebaseService {
     public afAuth: AngularFireAuth
   ) {}
 
+  getCurrentUser() {
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.user.subscribe(currentUser => {
+        // console.log(currentUser);
+        resolve(currentUser);
+      });
+    });
+  }
+
   getTasks() {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.user.subscribe(currentUser => {
@@ -44,7 +53,9 @@ export class FirebaseService {
 
   unsubscribeOnLogOut() {
     // remember to unsubscribe from the snapshotChanges
-    this.snapshotChangesSubscription.unsubscribe();
+    if (!!this.snapshotChangesSubscription) {
+      this.snapshotChangesSubscription.unsubscribe();
+    }
   }
 
   updateTask(taskKey, value) {

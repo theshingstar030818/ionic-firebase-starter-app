@@ -19,18 +19,23 @@ export class FirebaseMessagingService {
     private device: Device,
   ) {
     if (this.device.platform === 'Android' || this.device.platform === 'ios') {
-      this.firebaseCordovaInit();
+      this.firebaseMessagingCordovaInit();
     } else {
-      this.messaging = app.messaging();
-      navigator.serviceWorker.register('firebase-messaging-sw.js').then((registration) => {
-        this.messaging.useServiceWorker(registration);
-        // this.disableNotifications()
-        this.enableNotifications();
-      });
+      this.firebaseMessagingWebInit();
     }
   }
 
-  public firebaseCordovaInit() {
+  public firebaseMessagingWebInit() {
+    this.messaging = app.messaging();
+    navigator.serviceWorker.register('../../firebase-messaging-sw.js').then((registration) => {
+      this.messaging.useServiceWorker(registration);
+      // this.disableNotifications()
+      this.enableNotifications();
+      this.setupIncomingMessageHandler();
+    });
+  }
+
+  public firebaseMessagingCordovaInit() {
     this.firebaseCordova.getToken()
       .then(token => {
         this.currentToken = token;
@@ -39,15 +44,18 @@ export class FirebaseMessagingService {
       .catch(error => console.error('Error getting token', error));
 
     this.firebaseCordova.onNotificationOpen()
-      .subscribe(data => console.log(`User opened a notification ${data}`));
+      .subscribe((data) => {
+        console.log(`User opened a notification ${data}`);
+      });
 
-    this.firebaseCordova.onTokenRefresh().subscribe((token: string) => console.log(`Got a new token ${token}`));
+    this.firebaseCordova.onTokenRefresh().subscribe((token: string) => {
+      this.currentToken = token;
+      console.log(`Got a new token ${token}`);
+    });
   }
 
   public enableNotifications() {
-    console.log('Requesting permission...');
     return this.messaging.requestPermission().then(() => {
-        console.log('Permission granted');
         // token might change - we need to listen for changes to it and update it
         this.setupOnTokenRefresh();
         return this.updateToken();
@@ -75,8 +83,15 @@ export class FirebaseMessagingService {
 
   private setupOnTokenRefresh(): void {
     this.unsubscribeOnTokenRefresh = this.messaging.onTokenRefresh(() => {
-      console.log('Token refreshed');
       this.storage.set('fcmToken', '').then(() => { this.updateToken(); });
     });
+  }
+
+  private setupIncomingMessageHandler() {
+    // Handle incoming messages. Called when:
+    // - a message is received while the app has focus
+    // - the user clicks on an app notification created by a service worker
+    //   `messaging.setBackgroundMessageHandler` handler.
+    this.messaging.onMessage((payload) => { console.log('Message received. ', payload); });
   }
 }

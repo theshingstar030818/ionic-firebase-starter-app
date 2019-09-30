@@ -11,19 +11,33 @@
     </ion-card-header>
   
     <ion-card-content>
+      <b>Cordova sdk: </b>
       <pre>{{deviceInfo | json}}</pre>
+      <b>Ionic Platform : </b>
+      <pre>{{platform.platforms() | json}}</pre>
     </ion-card-content>
   </ion-card>
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Cordova FCM Token</ion-card-title>
+      <ion-card-title>Firebase Cloud Messaging Token</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
       Token: <ion-input value="{{firebaseMessagingService.currentToken}}"></ion-input>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>User Info</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <pre>{{currentUser | json}}</pre>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 
 <ion-footer (click)="logout()">

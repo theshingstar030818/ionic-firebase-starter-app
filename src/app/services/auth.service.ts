@@ -35,7 +35,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.signOut()
       .then(() => {
-        // this.firebaseService.unsubscribeOnLogOut();
+        this.firebaseService.unsubscribeOnLogOut();
         resolve();
       }).catch((error) => {
         console.log(error);

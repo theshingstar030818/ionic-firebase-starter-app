@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
 
-import { FirebaseMessagingService } from '../firebase-messaging.service';
-import { Device } from '@ionic-native/device/ngx';
-
+import { FirebaseMessagingService } from '../services/firebase-messaging.service';
+import { FirebaseService } from '../services/firebase.service';
 import { AuthService } from '../services/auth.service';
+
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Device } from '@ionic-native/device/ngx';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,17 +18,34 @@ import { Router } from '@angular/router';
 export class DeviceInfoPage implements OnInit {
 
   deviceInfo: any = {};
+  currentUser: any;
 
   constructor(
     private firebaseMessagingService: FirebaseMessagingService,
     private device: Device,
     private authService: AuthService,
     private router: Router,
+    private firebaseService: FirebaseService,
+    public afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    private platform: Platform,
   ) {
     this.getDeviceInfo();
+    this.currentUser = this.firebaseService.getCurrentUser();
+    this.getAllPeople();
   }
 
   ngOnInit() {
+  }
+
+  async getAllPeople() {
+    this.afAuth.user.subscribe(currentUser => {
+      if (currentUser) {
+        this.afs.collection('people').doc(currentUser.uid).collection('tasks').snapshotChanges().subscribe((data) => {
+          // console.log(data);
+        });
+      }
+    });
   }
 
   getDeviceInfo() {
